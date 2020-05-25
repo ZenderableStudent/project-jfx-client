@@ -1,0 +1,33 @@
+plugins {
+id 'java'
+}
+group = 'com.project'
+version = '1.0'
+repositories {
+ jcenter()
+}
+dependencies {
+compile group: 'org.hsqldb', name: 'hsqldb', version: '2.5.0'
+compile group: 'com.zaxxer', name: 'HikariCP', version: '3.4.2'
+compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+compile group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
+compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+}
+//kopiowanie katalogu bibliotekami
+task copyRuntimeLibs(type: Copy) {
+ into "$buildDir/libs/lib/"
+ from configurations.compile
+}
+//kopiowanie katalogu z baza danych
+task copyDb(type: Copy) {
+ into "$buildDir/libs/db"
+ from "db"
+}
+//attach to assemble task
+assemble.dependsOn copyRuntimeLibs, copyDb
+jar {
+ manifest {
+ attributes 'Main-Class' : 'com.project.app.ProjectClientApplication'
+ attributes 'Class-Path' : configurations.compile.collect { 'lib/' + it.getName() }.join(' ')
+ }
+}
