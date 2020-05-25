@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: lib/hsqldb-2.5.0.jar lib/HikariCP-3.4.2.jar lib/logback-cl
- assic-1.2.3.jar lib/logback-core-1.2.3.jar lib/slf4j-api-1.7.30.jar
-Main-Class: com.project.app.ProjectClientApplication
-
